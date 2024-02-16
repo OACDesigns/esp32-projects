@@ -40,7 +40,7 @@ captive_portal:
 esp32_camera:
   external_clock:
     pin: GPIO0
-    frequency: 20MHz
+    frequency: 16MHz  # default 20MHz. Supposedly 10MHz will increase FPS perf, but maybe not the case in esphome?
   i2c_pins:
     sda: GPIO26
     scl: GPIO27
