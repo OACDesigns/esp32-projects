@@ -50,14 +50,31 @@ esp32_camera:
   pixel_clock_pin: GPIO22
   power_down_pin: GPIO32
   # Image settings
-  name: $friendly_name
+  name: video stream
   icon: mdi:video-wireless
-  resolution: 1024x768 # you can use: [1600x1200 , 1280x1024 , 1024x768 , 800x600, 640x480 ] for best performance (FPS) use 1024 or lower resolution.
-  
-  jpeg_quality: 20  # The JPEG quality that the camera should encode images with. From 10 (best) to 63 (worst)
-  aec2: true        # enable Auto Exposure Control 2 - changes AE computation method
+  # resolution: 1024x768  # you can use: [1600x1200 , 1280x1024 , 1024x768 , 800x600, 640x480 ] for best performance (FPS) use 1024 or lower resolution.
+  resolution: 800x600  # you can use: [1600x1200 , 1280x1024 , 1024x768 , 800x600, 640x480 ] for best performance (FPS) use 1024 or lower resolution.
+  max_framerate: 15 fps # [defaults to 10 fps] up to 60Hz, beware of overheating
+  idle_framerate: 0.2 fps # [defaults to 0.1 fps] framerate when no client is requesting a full stream
+
+  jpeg_quality: 20  # The JPEG quality to encode images with. From 10 (best) to 63 (worst)
+  brightness: 2     # The brightness to apply to the picture, default 0, max 2 
+  contrast: 0
+
+  # exposure settings
+  aec_mode: auto
+  # aec2: true        # enable Auto Exposure Control 2 - changes AE computation method, default is false
+  aec2: false
+  # ae_level: 0
   ae_level: 2       # auto exposure level, defaults 0
-  brightness: 2     # The brightness to apply to the picture, default 0, updated to 2 for birdhouse
+  aec_value: 300
+  # gain settings
+  agc_mode: auto
+  # agc_gain_ceiling: 2x
+  agc_gain_ceiling: 32x     # auto gain control (works like ISO). Defaults to 2x. Max is 128x
+  agc_value: 0
+  # white balance setting
+  wb_mode: auto
 
 # http server setting
 esp32_camera_web_server:
@@ -86,8 +103,7 @@ output:
   # - platform: gpio
   #   id: espCamLed
   #   pin: GPIO04
-
-
+  
 
 light:
   # Simple on/off light
