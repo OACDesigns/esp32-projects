@@ -67,29 +67,42 @@ esp32_camera_web_server:
     mode: snapshot
     
 output:
-  # Flashlight - use channel 2 for PWM, channel 1 is used by camera.
-  - platform: ledc   
-    id: espCamLed
-    pin: GPIO4  # GPIO_4 is the flash light pin
-    channel: 2
-    # max_power: 0.25
-
   # Red status light
   - platform: gpio
     id: gpio_33
     pin:
       number: GPIO33
       inverted: True
+      
+  # Flashlight 
+  # Here we could simply turn on/off the GPIO and create a binary light control
+  # or we use PWM for a dimmable monochrom light (must use channel 2,  channel 1 is used by camera)
+  - platform: ledc   
+    id: espCamLed
+    pin: GPIO4  # GPIO_4 is the flash light pin
+    channel: 2
+
+  # Binary light control
+  # - platform: gpio
+  #   id: espCamLed
+  #   pin: GPIO04
+
+
 
 light:
+  # Simple on/off light
+  # - platform: binary
+  #   name: Flashlight
+  #   output: espCamLed
+
   - platform: monochromatic
     name: Flashlight
     output: espCamLed
     default_transition_length: 300ms
 
   - platform: binary
-    output: gpio_33
     name: Status LED
+    output: gpio_33
 
 button:
   - platform: restart
