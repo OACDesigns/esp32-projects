@@ -1,5 +1,14 @@
+
+substitutions:
+  device_name: "esp32cam"
+  friendly_name: Wifi Camera
+  device_description: Basic WIFI camera in an default ESP32-CAM module.
+
 esphome:
-  name: bigbrother
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  comment: ${device_description}
+
 
 esp32:
   board: esp32cam
@@ -23,7 +32,7 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "Bigbrother Fallback Hotspot"
+    ssid: "${device_name} Fallback Hotspot"
     password: "hX3hqBj3Ut60"
 
 captive_portal:
@@ -41,7 +50,14 @@ esp32_camera:
   pixel_clock_pin: GPIO22
   power_down_pin: GPIO32
   # Image settings
-  name: My Big Brother Camera
+  name: $friendly_name
+  icon: mdi:video-wireless
+  resolution: 1024x768 # you can use: [1600x1200 , 1280x1024 , 1024x768 , 800x600, 640x480 ] for best performance (FPS) use 1024 or lower resolution.
+  
+  jpeg_quality: 20  # The JPEG quality that the camera should encode images with. From 10 (best) to 63 (worst)
+  aec2: true        # enable Auto Exposure Control 2 - changes AE computation method
+  ae_level: 2       # auto exposure level, defaults 0
+  brightness: 2     # The brightness to apply to the picture, default 0, updated to 2 for birdhouse
 
 # http server setting
 esp32_camera_web_server:
@@ -49,3 +65,37 @@ esp32_camera_web_server:
     mode: stream
   - port: 8081
     mode: snapshot
+    
+# Flashlight, use channel 2 for PWM, channel 1 is used by camera.
+output:
+  - platform: ledc
+    pin: GPIO4
+    id: gpio_4
+    channel: 2
+
+## GPIO_4 is the flash light pin
+light:
+  - platform: monochromatic
+    output: gpio_4
+    name: PWM light
+
+switch:
+  - platform: restart
+    name: "${device_name} restart"   
+    entity_category: config
+
+sensor:
+  - platform: uptime
+    name: $device_name Uptime
+    disabled_by_default: true
+    entity_category: diagnostic  
+    
+  - platform: wifi_signal
+    name: $device_name WiFi Signal
+    update_interval: 240s
+    disabled_by_default: true
+    entity_category: diagnostic  
+
+  - platform: internal_temperature
+    name: "cpu Temperature"
+    internal: true
