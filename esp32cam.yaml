@@ -40,7 +40,7 @@ captive_portal:
 esp32_camera:
   external_clock:
     pin: GPIO0
-    frequency: 16MHz  # default 20MHz. Supposedly 10MHz will increase FPS perf, but maybe not the case in esphome?
+    frequency: 16MHz  # default 20MHz. It seems that 8MHz or 16MHz causes less interference with wifi
   i2c_pins:
     sda: GPIO26
     scl: GPIO27
@@ -66,36 +66,56 @@ esp32_camera_web_server:
   - port: 8081
     mode: snapshot
     
-# Flashlight, use channel 2 for PWM, channel 1 is used by camera.
 output:
-  - platform: ledc
-    pin: GPIO4
-    id: gpio_4
+  # Flashlight - use channel 2 for PWM, channel 1 is used by camera.
+  - platform: ledc   
+    id: espCamLed
+    pin: GPIO4  # GPIO_4 is the flash light pin
     channel: 2
+    # max_power: 0.25
 
-## GPIO_4 is the flash light pin
+  # Red status light
+  - platform: gpio
+    id: gpio_33
+    pin:
+      number: GPIO33
+      inverted: True
+
 light:
   - platform: monochromatic
-    output: gpio_4
-    name: PWM light
+    name: Flashlight
+    output: espCamLed
+    default_transition_length: 300ms
 
-switch:
+  - platform: binary
+    output: gpio_33
+    name: Status LED
+
+button:
   - platform: restart
-    name: "${device_name} restart"   
+    name: restart
     entity_category: config
 
+# Sensors
 sensor:
-  - platform: uptime
-    name: $device_name Uptime
+  - platform: wifi_signal
+    name: WiFi Signal
+    update_interval: 240s
     disabled_by_default: true
     entity_category: diagnostic  
-    
-  - platform: wifi_signal
-    name: $device_name WiFi Signal
-    update_interval: 240s
+
+  - platform: uptime
+    name: Uptime
     disabled_by_default: true
     entity_category: diagnostic  
 
   - platform: internal_temperature
     name: "cpu Temperature"
     internal: true
+
+binary_sensor:
+  - platform: status
+    name: Status
+    entity_category: diagnostic  
+
+
