@@ -1,0 +1,18 @@
+substitutions:
+  name: athom-presence-sensor-upstairs
+  friendly_name: presence sensor upstairs
+packages:
+  Athom_Technology.Presence_Sensor: github://athom-tech/athom-configs/athom-presence-sensor.yaml
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: Np7m4HZBUgnUyO+/2AslrPRAgUyKJeO4th85A2hJRw0=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # use_address: athom-presence-sensor-9cee48.local
