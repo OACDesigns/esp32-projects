@@ -1,0 +1,31 @@
+substitutions:
+  name: office-ventilation-plug
+  friendly_name: Office Ventilation Plug
+  room: "office"
+  dns_domain: ".local"
+packages:
+  Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
+# NB: when using mqtt instead of native api, this must be removed otherwise the ESP will reboot every 15 mins
+api:
+  encryption:
+    key: sdPcknDmUxdfAKxLcsatO5wbueqJHPrGHpYXXYdgueY=
+
+# mqtt:
+#   broker: !secret mqtt_broker
+#   username: !secret mqtt_username
+#   password: !secret mqtt_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  # use_address: athom-smart-plug-v2-9d953e.local
+
+  # manual_ip:
+  #   static_ip: 192.168.1.134
+  #   gateway: 192.168.1.1
+  #   subnet: 255.255.255.0

@@ -1,0 +1,20 @@
+substitutions:
+  name: piano-plug
+  friendly_name: Piano Plug
+  room: "office"
+  dns_domain: ".local"
+  # relay_restore_mode: RESTORE_DEFAULT_OFF
+packages:
+  # Athom_Technology.Smart_Plug_V2_Modified: github://OACDesigns/athom-configs/athom-smart-plug-v2.yaml
+  Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+api:
+  encryption:
+    key: K5fs9mCBAZ7wCH+GC+qPYDgMr5jL4Arl4s4h9hdKfjs=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
