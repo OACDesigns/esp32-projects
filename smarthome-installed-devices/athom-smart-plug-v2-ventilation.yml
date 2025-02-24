@@ -1,7 +1,7 @@
 substitutions:
   name: ventilation-plug
   friendly_name: Ventilation Plug
-  room: "living room"
+  room: "bathroom"
   dns_domain: ".local"
 packages:
   Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
