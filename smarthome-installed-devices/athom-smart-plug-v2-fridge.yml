@@ -1,20 +1,21 @@
 substitutions:
-  name: oven-plug
-  friendly_name: Oven Plug
+  name: fridge-plug
+  friendly_name: Fridge Plug
   room: "kitchen"
   dns_domain: ".local"
   relay_restore_mode: RESTORE_DEFAULT_ON
 packages:
   Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
-  # athom.smart-plug-v2: github://OACDesigns/athom-configs/athom-smart-plug-v2.yaml@main
 esphome:
   name: ${name}
   name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+
 api:
   encryption:
-    key: gvMiAISbSCCYNBtdRA6pAo4J6A/zDTtITw3YFJnB0Rc=
-
+    key: qSa42CuascB2rVORfeqzfqtBPxJtXGo3EVw9p3Y+6xQ=
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  # use_address: athom-smart-plug-v2-9d94ea.local
