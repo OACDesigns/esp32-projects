@@ -1,6 +1,6 @@
 substitutions:
-  name: office-ventilation-plug
-  friendly_name: Office Ventilation Plug
+  name: miele-vacuum-plug
+  friendly_name: Miele Vacuum Charger
   room: "office"
   dns_domain: ".local"
 packages:

@@ -17,3 +17,4 @@ api:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  # use_address: athom-smart-plug-v2-a794a1.local
