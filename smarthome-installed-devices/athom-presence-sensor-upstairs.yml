@@ -8,6 +8,7 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 api:
+  # NB: if OTA fails due to binary size, comment out encryption, build, deploy. Then uncomment and rebuild and deploy. 
   encryption:
     key: Np7m4HZBUgnUyO+/2AslrPRAgUyKJeO4th85A2hJRw0=
 

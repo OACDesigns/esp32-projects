@@ -8,6 +8,7 @@ esphome:
   name_add_mac_suffix: false
   friendly_name: ${friendly_name}
 api:
+  # NB: if OTA fails due to binary size, comment out encryption, build, deploy. Then uncomment and rebuild and deploy.
   encryption:
     key: vmzuBGsLfjthHPUQag+62W2Vj20ZE4Y1Kla8RHwssbY=
 
@@ -15,3 +16,4 @@ api:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  # use_address: athom-presence-sensor-9ced52.local
