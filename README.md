@@ -6,3 +6,6 @@ Integrates into homeassistant/esphome.
 Exposes a live video stream, a button for the flash light, and a button to reset the device.
 
 
+## ESP32 Pin layout
+*AZ-Delivery ESP32-WROOM-32*
+![ESP32 Pinout](resources/ESP_-_32_NodeMCU_Developmentboard_Pinout_Diagram.webp)
