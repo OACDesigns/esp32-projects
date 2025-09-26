@@ -1,0 +1,114 @@
+mqtt:
+  fan:
+    unique_id: itho-daaderop-cve-eco-rft-se
+    device:
+      name: "central ventilation"
+      model: "ITHO daalderop Ecofan"
+      model_id: "CVE ECO RFT SE"
+      identifiers: "545-5026-001"
+      configuration_url: "http://192.168.1.145"
+    name: Ecofan
+    availability:
+      - topic: "ITHO-ventilation/status/LWT"
+        payload_available: "Connected"
+        payload_not_available: "Connection Lost"
+    command_topic: "ITHO-ventilation/Fan/cmd"
+    state_topic: "ITHO-ventilation/Fan/State"
+    state_value_template: "{% if value|float==0 %}State 0{% endif %}{% if value|float >0 %}State 1{% endif %}"
+    payload_on: "State 1"
+    payload_off: "State 1"
+    optimistic: true
+    preset_modes:
+      - "low"
+      - "medium"
+      - "high"
+      - "timer"
+    preset_mode_command_topic: "ITHO-ventilation/Fan/cmd"
+    preset_mode_command_template: >
+      {% if value == 'low' %}
+      State 1
+      {% elif value == 'medium' %}
+      State 2
+      {% elif value == 'high' %}
+      State 3
+      {% elif value == 'timer' %}
+      State 13
+      {% else %}
+      State 1
+      {% endif %}
+    preset_mode_state_topic: "ITHO-ventilation/Fan/State"
+    preset_mode_value_template: >
+      {% if value_json == 0 %}
+      low
+      {% elif value_json == 1 %}
+      low
+      {% elif value_json == 2 %}
+      medium
+      {% elif value_json == 3 %}
+      high
+      {% else %}
+      timer
+      {% endif %}
+
+
+  sensor:
+    - name: "timer"
+      unique_id: itho-daaderop-cve-eco-rft-se-timer
+      device:
+        identifiers: "545-5026-001"
+      device_class: "duration"
+      state_class: "total"
+      unit_of_measurement: "s"
+      suggested_display_precision: 0
+      icon: mdi:timer
+      state_topic: "ITHO-ventilation/Fan/Timer"
+      value_template: "{{value}}"
+
+    - name: "speed"
+      unique_id: itho-daaderop-cve-eco-rft-se-speed
+      device:
+        identifiers: "545-5026-001"
+      icon: mdi:transfer-right
+      device_class: enum
+      options: ["low", "medium", "high", "high (timer)", "unknown"]
+      state_topic: "ITHO-ventilation/Fan/State"
+      value_template: >
+        {% if value|float==1 %}
+          low
+        {% elif value|float==2 %}
+          medium
+        {% elif value|float==3 %}
+          high
+        {% elif value|float>=11 %}
+          high (timer)
+        {% else %}
+          unknown
+        {% endif %}
+
+
+  button:
+    - name: "pairing"
+      unique_id: itho-daaderop-cve-eco-rft-se-pairing
+      device:
+        identifiers: "545-5026-001"
+      enabled_by_default: false
+      entity_category: "config"
+      command_topic: "ITHO-ventilation/Fan/cmd"
+      payload_press: "State 1111"
+      availability:
+        - topic: "ITHO-ventilation/status/LWT"
+          payload_available: "Connected"
+          payload_not_available: "Connection Lost"
+
+    - name: "unpairing"
+      unique_id: itho-daaderop-cve-eco-rft-se-unpairing
+      device:
+        identifiers: "545-5026-001"
+      enabled_by_default: false
+      entity_category: "config"
+      command_topic: "ITHO-ventilation/Fan/cmd"
+      payload_press: "State 9999"
+      availability:
+        - topic: "ITHO-ventilation/status/LWT"
+          payload_available: "Connected"
+          payload_not_available: "Connection Lost"
