@@ -4,6 +4,8 @@ substitutions:
   room: "kitchen"
   dns_domain: ".local"
   relay_restore_mode: RESTORE_DEFAULT_ON
+  # Specifies whether pins should be initialised as early as possible to known values. Recommended value is false where switches are involved, as these will toggle when updating the firmware or when restarting the device. Defaults to true.
+  early_pin_init: false
 packages:
   Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
 esphome:

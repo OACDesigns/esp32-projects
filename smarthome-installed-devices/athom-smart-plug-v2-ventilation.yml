@@ -3,6 +3,8 @@ substitutions:
   friendly_name: Ventilation Plug
   room: "bathroom"
   dns_domain: ".local"
+  # Specifies whether pins should be initialised as early as possible to known values. Recommended value is false where switches are involved, as these will toggle when updating the firmware or when restarting the device. Defaults to true.
+  early_pin_init: false
 packages:
   Athom_Technology.Smart_Plug_V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
   # athom.smart-plug-v2-modified: github://OACDesigns/athom-configs/athom-smart-plug-v2.yaml@main
